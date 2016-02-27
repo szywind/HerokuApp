@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     //TODO set the base url for this client
-    public static final String API_BASE_URL = "https://google.com";
+    public static final String API_BASE_URL = "https://mean407.herokuapp.com";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
