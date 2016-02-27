@@ -17,6 +17,28 @@
             android:layout_height="wrap_content" />
 
         <!--TODO add the other textviews and a button-->
+        <TextView
+            android:textAppearance="?android:textAppearanceLarge"
+            android:text="Genre of the Game"
+            android:id="@+id/genre_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textAppearance="?android:textAppearanceLarge"
+            android:text="Platform of the Game"
+            android:id="@+id/platform_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:id="@+id/button"
+            android:layout_gravity="center_horizontal"
+            android:focusable="false"/>
+
 
     </LinearLayout>
 
