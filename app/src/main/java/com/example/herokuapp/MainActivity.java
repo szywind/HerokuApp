@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
     private void getGamesRetro(String username, String password){
 
         //create the REST client
-        GameClient client = null;
+        GameClient client = ServiceGenerator.createService(GameClient.class);
 
         //TODO
-        Call<List<Game>> call = null;
+        Call<List<Game>> call = client.games(username, password);
 
         call.enqueue(new Callback<List<Game>>() {
 
@@ -70,10 +70,14 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccess()) {
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
                     //TODO populate list with the respons (JSON)
+                    Gson gson = new GsonBuilder().create();
+                    gameList = gson.fromJson(response.raw().toString(), );
+
                 } else {
                     // error response, no access to resource?
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
                     //TODO do something to say you got nothing back
+                    Toast.makeText(getBaseContext(), "Get nothing back", Toast.LENGTH_SHORT).show();
                 }
             }
 
