@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -21,6 +23,8 @@ public class CustomAdapter extends BaseAdapter {
     // A cache for looking up Views
     private static class ViewHolder {
         TextView name;
+        TextView genre;
+        TextView platform;
         Button delete;
     }
 
@@ -57,6 +61,9 @@ public class CustomAdapter extends BaseAdapter {
             viewHolder.name = (TextView) convertView.findViewById(R.id.name_text_view);
 
             //TODO initialize the other UI elements
+            viewHolder.genre = (TextView) convertView.findViewById(R.id.genre_text_view);
+            viewHolder.platform = (TextView) convertView.findViewById(R.id.platform_text_view);
+            viewHolder.delete = (Button) convertView.findViewById(R.id.button);
 
             convertView.setTag(viewHolder);
         } else {
@@ -67,7 +74,11 @@ public class CustomAdapter extends BaseAdapter {
         final Game game = getItem(position);
 
         //TODO Populate the data into the template view using the data object
-        viewHolder.name.setText("The name of the Game");
+        //viewHolder.name.setText("The name of the Game");
+        viewHolder.name.setText(game.getName());
+        viewHolder.genre.setText(game.getGenre());
+        viewHolder.platform.setText(game.getPlatform());
+
 
         //TODO implement onclick for delete (do this after implementing retrofit)
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
