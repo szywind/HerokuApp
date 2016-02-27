@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,21 +48,26 @@ public class MainActivity extends AppCompatActivity {
         //set adapter
         listView.setAdapter(adapter);
 
-        SharedPreferences preferences = getPreferences(1);
+        SharedPreferences preferences = getSharedPreferences("login",1);
         username = preferences.getString("username", null);
         password = preferences.getString("password", null);
 
         //TODO uncomment this once you have implemented getGamesRetro
-        //getGamesRetro(username, password);
+        getGamesRetro(username, password);
     }
 
     private void getGamesRetro(String username, String password){
 
         //create the REST client
-        GameClient client = ServiceGenerator.createService(GameClient.class);
+        GameClient client = ServiceGenerator.createService(GameClient.class, username, password);
 
         //TODO
-        Call<List<Game>> call = client.games(username, password);
+//        Call<List<Game>> call = client.games(username, password);
+
+        Call<Game> ans = client.basicLogin();
+
+        Call<List<Game>> call = client.getGames();
+
 
         call.enqueue(new Callback<List<Game>>() {
 
@@ -71,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
                     //TODO populate list with the respons (JSON)
                     Gson gson = new GsonBuilder().create();
-                    gameList = gson.fromJson(response.raw().toString(), );
+                    Game[] games = gson.fromJson(response.raw().toString(), Game[].class);
+                    gameList = (ArrayList) Arrays.asList(games);
 
                 } else {
                     // error response, no access to resource?

@@ -1,6 +1,8 @@
 package com.example.herokuapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,10 +22,11 @@ public class LoginActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPreferences(0).edit()
-                        .putString("username", username.getText().toString())
-                        .putString("password", password.getText().toString())
-                        .apply();
+                SharedPreferences pref = getBaseContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("username", username.getText().toString());
+                editor.putString("password", password.getText().toString());
+                editor.apply();
 
                 startMainActivity();
             }
