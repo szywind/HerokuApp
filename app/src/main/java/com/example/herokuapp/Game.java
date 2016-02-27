@@ -49,5 +49,11 @@ public class Game {
     }
 
     //TODO make the game model
-    public Game(){}
+    public void Game(){}
+    public void Game(String id, String name, String genre, String platform){
+        this.id = id;
+        this.name = name;
+        this.genre = genre;
+        this.platform = platform;
+    }
 }

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         //set adapter
         listView.setAdapter(adapter);
 
-        SharedPreferences preferences = getPreferences(1);
+        SharedPreferences preferences = getSharedPreferences("login",1);
         username = preferences.getString("username", null);
         password = preferences.getString("password", null);
 
@@ -59,13 +59,15 @@ public class MainActivity extends AppCompatActivity {
     private void getGamesRetro(String username, String password){
 
         //create the REST client
-//        username="szywind@163.com";
-//        password="szywind";
         GameClient client = ServiceGenerator.createService(GameClient.class, username, password);
 
         //TODO
 //        Call<List<Game>> call = client.games(username, password);
-        Call<List<Game>> call = client.games();
+
+        Call<Game> ans = client.basicLogin();
+
+        Call<List<Game>> call = client.getGames();
+
 
         call.enqueue(new Callback<List<Game>>() {
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     //TODO populate list with the respons (JSON)
                     Gson gson = new GsonBuilder().create();
                     Game[] games = gson.fromJson(response.raw().toString(), Game[].class);
-                    gameList = (ArrayList)Arrays.asList(games);
+                    gameList = (ArrayList) Arrays.asList(games);
 
                 } else {
                     // error response, no access to resource?
