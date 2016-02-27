@@ -11,9 +11,9 @@ import retrofit2.http.Path;
  */
 public interface GameClient {
     //TODO set up the retrofit http call interface
-    @GET("/ddd")
+    @GET("/api/games")
     Call<List<Game>> games(
-            @Path("username") String username,
-            @Path("password") String password
+//            @Path("username") String username,
+//            @Path("password") String password
     );
 }

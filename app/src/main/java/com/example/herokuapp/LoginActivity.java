@@ -3,6 +3,7 @@ package com.example.herokuapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
                         .putString("username", username.getText().toString())
                         .putString("password", password.getText().toString())
                         .apply();
+Log.d("username: ", username.getText().toString());
+                Log.d("password: ", password.getText().toString());
 
                 startMainActivity();
             }
