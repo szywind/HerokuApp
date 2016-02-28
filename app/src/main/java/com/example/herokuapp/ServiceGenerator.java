@@ -47,7 +47,8 @@ public class ServiceGenerator {
                             .header("Authorization", basic)
                             .header("Accept", "/api/json")
                             //TODO add additional headers here
-
+                            .header("email", username)
+                            .header("password", password)
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
