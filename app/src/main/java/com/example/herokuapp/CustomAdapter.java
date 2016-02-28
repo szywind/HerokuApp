@@ -79,12 +79,14 @@ public class CustomAdapter extends BaseAdapter {
         viewHolder.genre.setText(game.getGenre());
         viewHolder.platform.setText(game.getPlatform());
 
-
         //TODO implement onclick for delete (do this after implementing retrofit)
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("CUSTOM_ADAPTER", "Delete button was pressed");
+                ((MainActivity) context).deleteGame(game);
+                games.remove(game);
+                notifyDataSetChanged();
             }
         });
 

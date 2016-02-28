@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private String username;
     private String password;
 
+    private GameClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private void getGamesRetro(String username, String password){
 
         //create the REST client
-        GameClient client = ServiceGenerator.createService(GameClient.class, username, password);
+        client = ServiceGenerator.createService(GameClient.class, username, password);
 
         //TODO
 //        Call<List<Game>> call = client.games(username, password);
@@ -109,8 +111,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteGame(Game game){
         //TODO make a http request to delete the game
+        client.basicLogin();
+        Call<Game> call = client.delGames(game.getId());
 
+        call.enqueue(new Callback<Game>() {
+            @Override
+            public void onResponse(Call<Game> call, Response<Game> response) {
+                Toast.makeText(getBaseContext(), response.message(), Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<Game> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Delete failed", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
+
 
     private void testCase1(){
         //fetch backend stuffs using some s
