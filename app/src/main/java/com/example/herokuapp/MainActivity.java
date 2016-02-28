@@ -48,9 +48,12 @@ public class MainActivity extends AppCompatActivity {
         //set adapter
         listView.setAdapter(adapter);
 
-        SharedPreferences preferences = getSharedPreferences("login",1);
+        SharedPreferences preferences = getSharedPreferences("login", 1);
         username = preferences.getString("username", null);
         password = preferences.getString("password", null);
+
+        username="szywind@163.com";
+        password="szywind";
 
         //TODO uncomment this once you have implemented getGamesRetro
         getGamesRetro(username, password);
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO
 //        Call<List<Game>> call = client.games(username, password);
 
-        Call<Game> ans = client.basicLogin();
+        //client.basicLogin();
 
         Call<List<Game>> call = client.getGames();
 
@@ -74,12 +77,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
                 if (response.isSuccess()) {
+                    Toast.makeText(getBaseContext(), "oh", Toast.LENGTH_SHORT).show();
+
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
                     //TODO populate list with the respons (JSON)
-                    Gson gson = new GsonBuilder().create();
-                    Game[] games = gson.fromJson(response.raw().toString(), Game[].class);
-                    gameList = (ArrayList) Arrays.asList(games);
-
+//                    Gson gson = new GsonBuilder().create();
+//                    Game[] games = gson.fromJson(response.raw().toString(), Game[].class);
+//                    gameList = (ArrayList) Arrays.asList(games);
+                    List<Game>  temp = response.body();
+                    if(!temp.isEmpty()) {
+                        gameList.clear();
+                        gameList.addAll(temp);
+                        adapter.notifyDataSetChanged();
+                    }
                 } else {
                     // error response, no access to resource?
                     Log.d("HTTP_GET_RESPONSE", response.raw().toString());
@@ -99,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteGame(Game game){
         //TODO make a http request to delete the game
+
     }
 
     private void testCase1(){
